@@ -22,13 +22,17 @@ from my_other_notebook import my_cool_function
 my_cool_function()
 ```
 
-## Warnings / Not implemented yet:
+## Limitations and guidelines:
+- Replace any space in the notebook name with `_`
+- Avoid using `-` in notebook names. If you do, replace `-` with `_` in the import statement
 - Names of notebooks in CPD are not unique: the import will work only if there is one exact match
 - Imports in python are static: once a package is imported, if its code is modified, importing again won't work. You will need to restart your notebook and import again, or use `importlib.reload(my_other_notebook)`
 
 ## TODO:
 - [x] basic usage
-- [ ] convert `_` to spaces
+- [x] convert `_` to spaces in import statement -> not needed, spaces are replaced by `_` in `.ipynb` files by CPD already
+- [x] convert `_` to `-` if necessessary
+- [ ] deal with `-` and `_` in smarter way
 - [ ] refactor code
 - [ ] simplify reloads
 - [ ] export to pypi

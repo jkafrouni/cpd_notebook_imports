@@ -17,7 +17,7 @@ def find_notebook_cpd(fullname):
     """
     path = fullname.rsplit('.', 1)
     notebook_name = path[-1]
-    
+
     token = os.environ['USER_ACCESS_TOKEN']
     project_id = os.environ['PROJECT_ID']
     host = os.environ['RUNTIME_ENV_APSX_URL']
@@ -26,9 +26,19 @@ def find_notebook_cpd(fullname):
                'accept': 'application/json',
                'content-type': 'application/json'}
     # find path of notebook
-    notebooks_metadata = requests.get(host + "/v2/asset_files/notebook", headers=headers, verify=False, params={"project_id": os.environ['PROJECT_ID']}) # verify=False to ignore SSL issues
+    notebooks_metadata = requests.get(host + "/v2/asset_files/notebook",
+                                      headers=headers,
+                                      verify=False, # verify=False to ignore SSL issues
+                                      params={"project_id": os.environ['PROJECT_ID']})
     metadata = [x for x in notebooks_metadata.json()['resources'] if notebook_name in x['path']]
-    if (len(metadata) == 0) or (len(metadata) > 1):
+    if len(metadata) == 0:
+        # this will only work if notebook has ONLY -, not if mix of - and _
+        new_name = notebook_name.replace('_', '-')
+        print(f'Didn\'t find {notebook_name}, trying {new_name}')
+        metadata = [x for x in notebooks_metadata.json()['resources'] if new_name in x['path']]
+        if len(metadata):
+            return None
+    elif len(metadata) > 1:
         return None
     else:
         return metadata[0]['path']
