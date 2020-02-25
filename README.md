@@ -47,3 +47,4 @@ Reloading code:
 - [ ] refactor code
 - [ ] simplify reloads
 - [ ] export to pypi
+- [ ] handle better cases with package with the same name exists

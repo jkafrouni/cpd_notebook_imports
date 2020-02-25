@@ -4,6 +4,7 @@ from IPython.core.interactiveshell import InteractiveShell
 import io, os, sys, types
 
 import requests
+import importlib
 
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -17,6 +18,11 @@ def find_notebook_cpd(fullname):
     """
     path = fullname.rsplit('.', 1)
     notebook_name = path[-1]
+
+    # check if there's a package with that name, if yes, skip:
+    # TODO enhance that portion
+    if importlib.util.find_spec(notebook_name) is not None:
+        return None
 
     token = os.environ['USER_ACCESS_TOKEN']
     project_id = os.environ['PROJECT_ID']
@@ -33,12 +39,16 @@ def find_notebook_cpd(fullname):
     notebooks_metadata = notebooks_metadata.json()['resources']
     metadata = [x for x in notebooks_metadata if x['path'].startswith('notebook/' + notebook_name)]
     if len(metadata) == 0:
-        # this will only work if notebook has ONLY -, not if mix of - and _
-        new_name = notebook_name.replace('_', '-')
-        print(f'Didn\'t find {notebook_name}, trying {new_name}')
-        metadata = [x for x in notebooks_metadata if x['path'].startswith('notebook/' + new_name)]
-        if len(metadata):
+        if not '_' in notebook_name:
             return None
+        else:
+            # this will only work if notebook has ONLY -, not if mix of - and _
+            new_name = notebook_name.replace('_', '-')
+            print(f'Didn\'t find {notebook_name}, trying {new_name}')
+            metadata = [x for x in notebooks_metadata if x['path'].startswith('notebook/' + new_name)]
+            if len(metadata):
+                return None
+            return metadata[0]['path']
     elif len(metadata) > 1:
         return None
     else:
