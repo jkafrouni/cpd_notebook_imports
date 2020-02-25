@@ -5,6 +5,10 @@ import io, os, sys, types
 
 import requests
 
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+
 def find_notebook_cpd(fullname):
     """
     TODO:
