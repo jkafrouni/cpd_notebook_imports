@@ -31,6 +31,7 @@ Python imports cannot contain a space or a dash in the name of the package. By d
 - Avoid using `-` in notebook names. If you do, replace `-` with `_` in the import statement
 - The import will most likely not work if the notebook name has a combination of `-` and `_` or `-` and space (that's the additional limitation)
 
+Reloading code:
 - Imports in python are static: once a package is imported, if its code is modified, importing again won't work. You will need to restart your notebook and import again, or use `importlib.reload(my_other_notebook)`
 
 ### Other limitations
