@@ -25,6 +25,7 @@ my_cool_function()
 ## Limitations and guidelines:
 - Replace any space in the notebook name with `_`
 - Avoid using `-` in notebook names. If you do, replace `-` with `_` in the import statement
+- The import will most likely not work if the notebook name has a combination of `-` and `_` or `-` and space
 - Names of notebooks in CPD are not unique: the import will work only if there is one exact match
 - Imports in python are static: once a package is imported, if its code is modified, importing again won't work. You will need to restart your notebook and import again, or use `importlib.reload(my_other_notebook)`
 
@@ -32,7 +33,9 @@ my_cool_function()
 - [x] basic usage
 - [x] convert `_` to spaces in import statement -> not needed, spaces are replaced by `_` in `.ipynb` files by CPD already
 - [x] convert `_` to `-` if necessessary
-- [ ] deal with `-` and `_` in smarter way
+- [ ] handle mix of `-` and `_`/space
+- [ ] support autocomplete
+- [ ] handle duplicates
 - [ ] refactor code
 - [ ] simplify reloads
 - [ ] export to pypi
