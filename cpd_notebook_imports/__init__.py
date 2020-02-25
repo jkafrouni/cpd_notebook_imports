@@ -30,12 +30,13 @@ def find_notebook_cpd(fullname):
                                       headers=headers,
                                       verify=False, # verify=False to ignore SSL issues
                                       params={"project_id": os.environ['PROJECT_ID']})
-    metadata = [x for x in notebooks_metadata.json()['resources'] if notebook_name in x['path']]
+    notebooks_metadata = notebooks_metadata.json()['resources']
+    metadata = [x for x in notebooks_metadata if x['path'].startswith('notebook/' + notebook_name)]
     if len(metadata) == 0:
         # this will only work if notebook has ONLY -, not if mix of - and _
         new_name = notebook_name.replace('_', '-')
         print(f'Didn\'t find {notebook_name}, trying {new_name}')
-        metadata = [x for x in notebooks_metadata.json()['resources'] if new_name in x['path']]
+        metadata = [x for x in notebooks_metadata if x['path'].startswith('notebook/' + new_name)]
         if len(metadata):
             return None
     elif len(metadata) > 1:
