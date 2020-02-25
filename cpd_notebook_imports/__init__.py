@@ -3,6 +3,8 @@ from nbformat import read
 from IPython.core.interactiveshell import InteractiveShell
 import io, os, sys, types
 
+import requests
+
 def find_notebook_cpd(fullname):
     """
     TODO:
@@ -95,8 +97,6 @@ class NotebookFinder(object):
         self.loaders = {}
 
     def find_module(self, fullname,  path=None):
-        print('Full name in NotebookFinder: ', fullname)
-        print('path in NotebookFinder: ', fullname)
         nb_path = find_notebook_cpd(fullname)
         if not nb_path:
             # the role of this function is to check that we can actually load
