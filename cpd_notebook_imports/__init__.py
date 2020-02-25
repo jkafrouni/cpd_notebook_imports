@@ -21,8 +21,8 @@ def find_notebook_cpd(fullname):
 
     # check if there's a package with that name, if yes, skip:
     # TODO enhance that portion
-    # if importlib.util.find_spec(notebook_name) is not None:
-    #     return None
+    if notebook_name in sys.modules:
+        return None
 
     token = os.environ['USER_ACCESS_TOKEN']
     project_id = os.environ['PROJECT_ID']
