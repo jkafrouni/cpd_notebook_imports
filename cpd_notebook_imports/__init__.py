@@ -46,7 +46,7 @@ def find_notebook_cpd(fullname):
             new_name = notebook_name.replace('_', '-')
             print(f'Didn\'t find notebooks {notebook_name}, trying {new_name}')
             metadata = [x for x in notebooks_metadata if x['path'].startswith('notebook/' + new_name)]
-            if len(metadata):
+            if len(metadata) == 0:
                 return None
             return metadata[0]['path']
     elif len(metadata) > 1:

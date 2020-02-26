@@ -32,7 +32,7 @@ Python imports cannot contain a space or a dash in the name of the package. By d
 - The import will most likely not work if the notebook name has a combination of `-` and `_` or `-` and space (that's the additional limitation)
 
 Reloading code:
-- Imports in python are static: once a package is imported, if its code is modified, importing again won't work. You will need to restart your notebook and import again, or use `importlib.reload(my_other_notebook)`
+- Imports in python are static: once a package is imported, if its code is modified, importing again won't work. You will need to restart your notebook and import again. ~~(or use `importlib.reload(my_other_notebook)`)~~
 
 ### Other limitations
 - Names of notebooks in CPD are not unique: the import will work only if there is one exact match
@@ -45,6 +45,6 @@ Reloading code:
 - [ ] support autocomplete
 - [ ] handle duplicates
 - [ ] refactor code
-- [ ] simplify reloads
+- [ ] simplify reloads -> `importlib.reload` not compatible for now
 - [ ] export to pypi
 - [ ] handle better cases with package with the same name exists
